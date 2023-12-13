@@ -56,14 +56,16 @@ class FactorAnalysis():
         self.L = eigenvectors[:, :self.n_components]
 
         #get the first n_components eigenvalues
-        self.eigenvalues_ = eigenvalues[:self.n_components]
+        self.eigenvalues = eigenvalues[:self.n_components]
 
-        #compute the explained variance
-        self.explained_variance_ = self.eigenvalues_ / np.sum(self.eigenvalues_)
+        #explained variance
+        self.explained_variance = self.eigenvalues / np.sum(eigenvalues)
 
-        #compute the explained variance ratio
-        self.explained_variance_ratio_ = self.explained_variance_ / np.sum(self.explained_variance_)
-        
+        #explained variance ratio
+        self.explained_variance_ratio = np.sum(self.explained_variance / np.sum(eigenvalues/np.sum(eigenvalues)))
+
+
+
 
     def transform(self, X):
         """
