@@ -43,15 +43,15 @@ class LDA():
 
 
 
-    def transform(self, X, k_features) -> np.ndarray:
+    def transform(self, X) -> np.ndarray:
         X_centered = X - self.mean_
         print(X_centered.shape, self.L.shape)
-        F = X_centered.dot(self.L.T)
+        F = X_centered.dot(self.L)
         return F
-        
 
-    def fit_transform(self, X, y, k_features) -> np.ndarray:
-        pass
+    def fit_transform(self, X, y) -> np.ndarray:
+        self.fit(X, y)
+        return self.transform(X)
 
 class PCA():
     def __init__(self) -> None:
