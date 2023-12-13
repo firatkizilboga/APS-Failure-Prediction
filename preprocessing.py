@@ -29,7 +29,7 @@ class LDA():
         # Determine SW^-1 SB
         A = np.linalg.inv(S_W) @ S_B
         # Get eigenvalues and eigenvectors of SW^-1 SB
-        eigenvalues, eigenvectors = np.linalg.eig(A)
+        eigenvalues, eigenvectors = np.linalg.eigh(A)
         # Sort eigenvectors by eigenvalues in descending order
         eigenvectors = eigenvectors.T
         idxs = np.argsort(abs(eigenvalues))[::-1]
