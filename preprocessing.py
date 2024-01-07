@@ -54,18 +54,39 @@ class LDA():
         return self.transform(X)
 
 class PCA():
-    def __init__(self) -> None:
-        pass
+    def __init__(self, n_components):
+        self.n_components = n_components
+        self.components = None
+        self.mean = None
 
-    def fit(self, X, y) -> None:
-        pass
+    def fit(self, X):
+        # Step 1: Center the data
+        self.mean = np.mean(X, axis=0)
+        X = X - self.mean
 
-    def transform(self, X) -> np.ndarray:
-        
-        pass
-        
-    def fit_transform(self, X, y, k_features) -> np.ndarray:
-        pass
+        # Step 2: Compute covariance matrix
+        cov_matrix = np.cov(X.T)
+
+        # Step 3: Compute eigenvalues and eigenvectors
+        eigenvalues, eigenvectors = np.linalg.eig(cov_matrix)
+
+        # Step 4: Sort eigenvectors by descending eigenvalues
+        eigenvectors = eigenvectors.T
+        idxs = np.argsort(eigenvalues)[::-1]
+        eigenvalues = eigenvalues[idxs]
+        eigenvectors = eigenvectors[idxs]
+
+        # Select the top n_components eigenvectors
+        self.components = eigenvectors[0:self.n_components]
+
+    def transform(self, X):
+        # Step 5: Project data
+        X = X - self.mean
+        return np.dot(X, self.components.T)
+
+    def fit_transform(self, X):
+        self.fit(X)
+        return self.transform(X)
 
 
 class FactorAnalysis():
